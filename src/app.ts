@@ -1,23 +1,36 @@
 // src/app.ts
 import express from 'express';
 import bodyParser from 'body-parser';
-import Repository from './infrastructure/Repository';
-
+import MoviesApplication from './application/MovieApplication';
+import Movies from './models/MoviesModel';
 
 const app = express();
 const PORT = 3000;
+const moviesRp = new MoviesApplication
 
 // Middleware
 app.use(bodyParser.json());
 
-// Routes
+/** ROUTES */
+
+/**
+ * endpoint / for get all movies
+ */
 app.get('/', async (req, res) => {
-  let x = await Repository.getInstance();
-  console.log(x)
-  res.send('¡Hola, esdte es mi servicio Express en TypeScript!');
+  let movies: Movies = await moviesRp.findAll()
+  res.json(movies);
+});
+
+/**
+ * endpoint / for get one movie
+ */
+app.get('/:id', async (req, res) => {
+  let id = req.params.id
+  let movies: Movies = await moviesRp.findById(id)
+  res.json(movies);
 });
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Running in port : ${PORT}`);
 });
