@@ -20,15 +20,15 @@ interface Review {
     updatedAt: Date, // Fecha de actualización de la reseña.
 }
 export default interface Movies {
-    _id: ObjectId;
-    title: string
-    comments: string
-    slug: string
-    image: string
-    director: string
-    platforms: Plataforms[]
-    score: number
-    createdAt: Date
-    updatedAt: Date
-    reviews?: Review[]
+    id: ObjectId, // ID de la película.
+    title: string, // Nombre de la película. Ejemplo: Spiderman 2: El Retorno
+    slug: string, // URL de la película basado en el título. Este campo se debe generar en el backend. Ejemplo: spiderman-2-el-retorno
+    image: string, // Logo o imagen principal de la película. Ejemplo: spiderman-2.jpg
+    director: string, // Nombre del director.
+    platforms: Plataforms[], // Array con las plataformas en las que se encuentra la película.
+    score: number, // Promedio de las reseñas. Puntuación media calculada en base a las calificaciones de cada una de las reseñas de la película.
+    reviews?: Review[] // Array que contiene todas las reseñas de la película separadas por plataforma..
+    createdAt: Date, // Fecha de creación de la película.
+    updatedAt: Date, // Fecha de última actualización de la película.
 }
+

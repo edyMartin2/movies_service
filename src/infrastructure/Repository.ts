@@ -1,5 +1,11 @@
 import { MongoClient, Db } from 'mongodb';
+import * as dotenv from 'dotenv';
+// Cargar las variables de entorno desde el archivo .env
+dotenv.config();
 
+const user = process.env.user
+const passworld = process.env.passworld
+const DBName = process.env.DBName
 /**
  * SINGLETON CLASS
  */
@@ -9,7 +15,7 @@ class Repository {
     private db: Db | undefined = undefined
 
     private constructor() {
-        this.client = new MongoClient('mongodb://root:1234@localhost:27017')
+        this.client = new MongoClient(`mongodb://${user}:${passworld}@localhost:27017`)
     }
 
     /**
@@ -28,7 +34,7 @@ class Repository {
     private async connect() {
         try {
             await this.client.connect();
-            this.db = this.client.db('SaludAuth');
+            this.db = this.client.db(DBName);
             console.log('Conexión a MongoDB establecida');
         } catch (error) {
             console.error('Error al conectar a MongoDB:', error);

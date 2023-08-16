@@ -3,6 +3,7 @@ import Movies from "../models/MoviesModel";
 import Repository from "./Repository";
 import { ObjectId } from 'mongodb';
 
+
 class MovieRepository {
     private db: Repository | undefined;
     private collection: Collection | undefined
@@ -14,7 +15,7 @@ class MovieRepository {
 
     async inicializar() {
         this.db = await Repository.getInstance()
-        this.collection = this.db?.getCollection('Users')
+        this.collection = this.db?.getCollection('Movies')
     }
 
     /**
@@ -30,6 +31,40 @@ class MovieRepository {
             return { message: String(e) }
         }
 
+    }
+
+
+    /**
+     * @param Movie movie
+     * @returns responseMongoMovie |  error
+     */
+    async post(Movie: Movies): Promise<any> {
+        try {
+            return await this.collection?.insertOne(Movie)
+        } catch (e) {
+            return { message: String(e) }
+        }
+    }
+
+    /**
+     * @param id 
+     * @param Movie 
+     */
+    async update(id: ObjectId, Movie: Movies) {
+        try {
+            return await this.collection?.updateOne(id, Movie)
+        } catch (e) {
+            return { message: String(e) }
+        }
+    }
+
+
+    async delete(id: ObjectId) {
+        try {
+            return await this.collection?.deleteOne(id)
+        } catch (e) {
+            return { message: String(e) }
+        }
     }
 }
 
