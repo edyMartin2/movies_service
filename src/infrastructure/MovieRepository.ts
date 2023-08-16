@@ -16,6 +16,7 @@ class MovieRepository {
     async inicializar() {
         this.db = await Repository.getInstance()
         this.collection = this.db?.getCollection('Movies')
+        //console.log('soy movie', this.db)
     }
 
     /**
@@ -61,9 +62,9 @@ class MovieRepository {
 
     async delete(id: ObjectId) {
         try {
-            return await this.collection?.deleteOne(id)
+            return await this.collection?.deleteOne({ _id: new ObjectId(id) })
         } catch (e) {
-            return { message: String(e) }
+            return { message: String(e), id }
         }
     }
 }

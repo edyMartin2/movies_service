@@ -27,11 +27,18 @@ class Repository {
             this.instance = new Repository();
             await this.instance.connect();
             return this.instance
+        } else if (this.instance.db !== undefined) {
+            return this.instance;
         }
-        return this.instance;
+        else {
+            await this.instance.connect();
+            return this.instance
+        }
+
     }
 
     private async connect() {
+        console.log('entramos al connect ', this.db === undefined ? 'vacia' : this.db)
         try {
             await this.client.connect();
             this.db = this.client.db(DBName);
@@ -48,7 +55,13 @@ class Repository {
      * @returns a mongo collection
      */
     public getCollection(collection: string) {
-        return this.db?.collection(collection);
+        let collectionGet = this.db?.collection(collection);
+        console.log('coleccionget::', collection)
+        return collectionGet
+    }
+
+    static getDb() {
+        return this.instance.db
     }
 }
 

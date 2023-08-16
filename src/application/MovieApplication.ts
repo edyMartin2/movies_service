@@ -46,6 +46,7 @@ class MoviesApplication {
 
     async delete(id: ObjectId){
         const delete_movie = await moviesRp.delete(id)
+        return delete_movie
     }
 }
 
