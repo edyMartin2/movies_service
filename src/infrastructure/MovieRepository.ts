@@ -101,9 +101,13 @@ class MovieRepository {
     }
 
     // Función para eliminar duplicados basados en la propiedad "_id"
-    eliminarDuplicados(arr: any[], prop: string): any[] {
-        return arr.filter((obj, index, self) =>
-            index === self.findIndex((o) => o[prop] === obj[prop])
+    eliminarDuplicados(arr: Movies[], prop: string): Movies[] {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return arr.filter((obj: any, index, self) =>
+            index === self.findIndex(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (o: any) => o[prop] === obj[prop]
+            )
         );
     }
 }
