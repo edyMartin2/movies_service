@@ -36,16 +36,22 @@ const mongodb_1 = require("mongodb");
 const dotenv = __importStar(require("dotenv"));
 // Cargar las variables de entorno desde el archivo .env
 dotenv.config();
-const user = process.env.user;
-const passworld = process.env.passworld;
-const DBName = process.env.DBName;
+const USERDB = process.env.USERDB;
+const PASSWORLD = process.env.PASSWORLD;
+const DBNAME = process.env.DBNAME;
+const AGENT = process.env.AGENT;
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
+//
+const URI = `${AGENT}://${USERDB}:${PASSWORLD}@${HOST}:${PORT}`;
 /**
  * SINGLETON CLASS
  */
 class Repository {
     constructor() {
         this.db = undefined;
-        this.client = new mongodb_1.MongoClient(`mongodb://${user}:${passworld}@localhost:27017`);
+        this.client = new mongodb_1.MongoClient(URI);
+        console.log('---->', URI, "mongodb://root:1234@localhost:27017");
     }
     /**
      *
@@ -72,7 +78,7 @@ class Repository {
             console.log('entramos al connect ', this.db === undefined ? 'vacia' : this.db);
             try {
                 yield this.client.connect();
-                this.db = this.client.db(DBName);
+                this.db = this.client.db(DBNAME);
                 console.log('Conexión a MongoDB establecida');
             }
             catch (error) {
