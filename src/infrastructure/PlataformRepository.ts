@@ -26,10 +26,12 @@ class PlataformRepository {
      * @param id string UUID
      * @returns if id is´nt empty return one plataform else return all plataforms[]  or return error 
      */
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async get(id: string = ""): Promise<any> {
         try {
-            let ids = id !== "" ? { _id: new ObjectId(id) } : {}
-            let find = await this.collection?.find(ids).toArray();
+            const ids = id !== "" ? { _id: new ObjectId(id) } : {}
+            const find = await this.collection?.find(ids).toArray();
             console.log("entramos en try", ids, find)
             return find
         } catch (e) {
@@ -44,9 +46,11 @@ class PlataformRepository {
      * @param Plataform plataform
      * @returns responseMongoPlataform | error
      */
+    
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async post(Plataform: Plataforms): Promise<any> {
         try {
-            let insert = await this.collection?.insertOne(Plataform)
+            const insert = await this.collection?.insertOne(Plataform)
             console.log("entramos en try", Plataform, insert)
             return insert
         } catch (e) {

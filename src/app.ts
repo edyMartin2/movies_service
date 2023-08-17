@@ -7,7 +7,7 @@ import PlataformApplication from './application/PlataformApplication'
 import Movies from './models/MoviesModel'
 import { ObjectId } from 'mongodb'
 import Plataforms from './models/PlataformModel'
-
+import cors from 'cors'
 const app = express()
 const PORT = 3000
 const moviesRp = new MoviesApplication()
@@ -17,6 +17,7 @@ const plataformRP = new PlataformApplication()
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors())
 
 //  ******************* Movies ************************
 
@@ -24,7 +25,7 @@ app.use(bodyParser.json());
  * endpoint / for get all movies
  */
 app.get('/movies', async (_, res) => {
-  let movies: Movies = await moviesRp.findAll()
+  const movies: Movies = await moviesRp.findAll()
   res.json(movies)
 });
 
@@ -32,8 +33,8 @@ app.get('/movies', async (_, res) => {
  * endpoint /movies/:id for get one movie
  */
 app.get('/movies/:id', async (req, res) => {
-  let id = req.params.id
-  let movie: Movies = await moviesRp.findById(id)
+  const id = req.params.id
+  const movie: Movies = await moviesRp.findById(id)
   res.json(movie)
 });
 
@@ -41,8 +42,8 @@ app.get('/movies/:id', async (req, res) => {
  * endpoint /movies for create one movie
  */
 app.post('/movies', async (req, res) => {
-  let body: Movies = req.body
-  let save_movie = await moviesRp.create(body)
+  const body: Movies = req.body
+  const save_movie = await moviesRp.create(body)
   res.json(save_movie)
 })
 
@@ -50,9 +51,9 @@ app.post('/movies', async (req, res) => {
  * endpoint /movies/:id for update one movie
  */
 app.post('/movies/:id', async (req, res) => {
-  let id: ObjectId = new ObjectId(req.params.id)
-  let body: Movies = req.body
-  let update_movie = await moviesRp.update(id, body)
+  const id: ObjectId = new ObjectId(req.params.id)
+  const body: Movies = req.body
+  const update_movie = await moviesRp.update(id, body)
   res.json(update_movie)
 })
 
@@ -60,9 +61,9 @@ app.post('/movies/:id', async (req, res) => {
  * endpoint /movies/:id for delete one movie
  */
 app.delete('/movies/:id', async (req, res) => {
-  let id: ObjectId = new ObjectId(req.params.id)
+  const id: ObjectId = new ObjectId(req.params.id)
   console.log(id)
-  let delete_movie = await moviesRp.delete(id)
+  const delete_movie = await moviesRp.delete(id)
   res.json(delete_movie)
 })
 
@@ -72,7 +73,7 @@ app.delete('/movies/:id', async (req, res) => {
  * endpoint /platforms for get all plataforms
  */
 app.get('/plataforms', async (req, res) => {
-  let plataform: Plataforms = await plataformRP.findAll()
+  const plataform: Plataforms = await plataformRP.findAll()
   console.log('respuesta de pla', plataform)
   res.json(plataform)
 })
@@ -81,8 +82,8 @@ app.get('/plataforms', async (req, res) => {
  * endpoint /plataforms/:id for get one plataform
  */
 app.get('/plataforms/:id', async (req, res) => {
-  let id = req.params.id
-  let plataform: Plataforms = await plataformRP.findById(id)
+  const id = req.params.id
+  const plataform: Plataforms = await plataformRP.findById(id)
   res.json(plataform)
 });
 
@@ -90,8 +91,8 @@ app.get('/plataforms/:id', async (req, res) => {
  * endpoint /movies for create one movie
  */
 app.post('/plataforms', async (req, res) => {
-  let body: Plataforms = req.body
-  let save_movie = await plataformRP.create(body)
+  const body: Plataforms = req.body
+  const save_movie = await plataformRP.create(body)
   res.json(save_movie)
 })
 // Start the server

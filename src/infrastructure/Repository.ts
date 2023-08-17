@@ -55,7 +55,7 @@ class Repository {
      * @returns a mongo collection
      */
     public getCollection(collection: string) {
-        let collectionGet = this.db?.collection(collection);
+        const collectionGet = this.db?.collection(collection);
         console.log('coleccionget::', collection)
         return collectionGet
     }
