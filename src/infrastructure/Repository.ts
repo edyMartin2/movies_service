@@ -3,22 +3,27 @@ import * as dotenv from 'dotenv';
 // Cargar las variables de entorno desde el archivo .env
 dotenv.config();
 
-const USER = process.env.USER
+const USERDB = process.env.USERDB
 const PASSWORLD = process.env.PASSWORLD
 const DBNAME = process.env.DBNAME
 const AGENT = process.env.AGENT
 const HOST = process.env.HOST
 const PORT = process.env.PORT
+//
+const URI = `${AGENT}://${USERDB}:${PASSWORLD}@${HOST}:${PORT}`
 /**
  * SINGLETON CLASS
  */
+
+
 class Repository {
     private static instance: Repository
     private client: MongoClient;
     private db: Db | undefined = undefined
 
     private constructor() {
-        this.client = new MongoClient(`${AGENT}://${USER}:${PASSWORLD}@${HOST}:${PORT}`)
+        this.client = new MongoClient(URI)
+        console.log('---->', URI, "mongodb://root:1234@localhost:27017")
     }
 
     /**
