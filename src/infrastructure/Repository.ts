@@ -3,9 +3,12 @@ import * as dotenv from 'dotenv';
 // Cargar las variables de entorno desde el archivo .env
 dotenv.config();
 
-const user = process.env.user
-const passworld = process.env.passworld
-const DBName = process.env.DBName
+const USER = process.env.USER
+const PASSWORLD = process.env.PASSWORLD
+const DBNAME = process.env.DBNAME
+const AGENT = process.env.AGENT
+const HOST = process.env.HOST
+const PORT = process.env.PORT
 /**
  * SINGLETON CLASS
  */
@@ -15,7 +18,7 @@ class Repository {
     private db: Db | undefined = undefined
 
     private constructor() {
-        this.client = new MongoClient(`mongodb://${user}:${passworld}@localhost:27017`)
+        this.client = new MongoClient(`${AGENT}://${USER}:${PASSWORLD}@${HOST}:${PORT}`)
     }
 
     /**
@@ -41,7 +44,7 @@ class Repository {
         console.log('entramos al connect ', this.db === undefined ? 'vacia' : this.db)
         try {
             await this.client.connect();
-            this.db = this.client.db(DBName);
+            this.db = this.client.db(DBNAME);
             console.log('Conexión a MongoDB establecida');
         } catch (error) {
             console.error('Error al conectar a MongoDB:', error);
