@@ -41,9 +41,8 @@ const PASSWORLD = process.env.PASSWORLD;
 const DBNAME = process.env.DBNAME;
 const AGENT = process.env.AGENT;
 const HOST = process.env.HOST;
-const PORT = process.env.PORT;
 //
-const URI = `${AGENT}://${USERDB}:${PASSWORLD}@${HOST}:${PORT}`;
+const URI = `${AGENT}://${USERDB}:${PASSWORLD}@${HOST}`;
 /**
  * SINGLETON CLASS
  */
