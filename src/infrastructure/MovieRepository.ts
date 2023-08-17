@@ -36,12 +36,14 @@ class MovieRepository {
                 const platform = i.platforms
                 const platformInfo = await Promise.all(await platform.map(async (p: Plataforms) => {
                     const platformInfo = await plataformRepository.get(String(p._id)).then(res => { return res })
-                    const data = {
-                        ...i,
-                        platforms: platformInfo
-                    }
-                    return data
+                    return platformInfo[0]
                 }))
+
+                const data = {
+                    ...i,
+                    platforms: platformInfo
+                }
+                return data
                 return platformInfo
             })
 
@@ -52,7 +54,7 @@ class MovieRepository {
             const filtro_unidim: any = filtro.flat()
 
             // Elimina duplicados basados en la propiedad "_id"
-            const arregloSinDuplicados = _.uniqBy(filtro_unidim, '_id');
+            const arregloSinDuplicados = this.eliminarDuplicados(filtro_unidim, '_id');
 
             return arregloSinDuplicados
         } catch (e) {
@@ -82,7 +84,8 @@ class MovieRepository {
      */
     async update(id: ObjectId, Movie: Movies) {
         try {
-            return await this.collection?.updateOne(id, Movie)
+            //{ _id: userID }, { $set: { name: "Nuevo Nombre" } }
+            return await this.collection?.updateOne({ _id: id }, { $set: Movie })
         } catch (e) {
             return { message: String(e) }
         }
@@ -95,6 +98,13 @@ class MovieRepository {
         } catch (e) {
             return { message: String(e), id }
         }
+    }
+
+    // Función para eliminar duplicados basados en la propiedad "_id"
+    eliminarDuplicados(arr: any[], prop: string): any[] {
+        return arr.filter((obj, index, self) =>
+            index === self.findIndex((o) => o[prop] === obj[prop])
+        );
     }
 }
 
