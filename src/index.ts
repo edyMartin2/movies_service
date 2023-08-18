@@ -96,6 +96,4 @@ app.post('/plataforms', async (req, res) => {
   res.json(save_movie)
 })
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Running in port : ${PORT}`)
-});
+module.exports = app

@@ -94,6 +94,4 @@ app.post('/plataforms', (req, res) => __awaiter(void 0, void 0, void 0, function
     res.json(save_movie);
 }));
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Running in port : ${PORT}`);
-});
+module.exports = app;
