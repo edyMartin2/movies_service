@@ -32,7 +32,7 @@ class PlataformRepository {
         try {
             const ids = id !== "" ? { _id: new ObjectId(id) } : {}
             const find = await this.collection?.find(ids).toArray();
-            console.log("entramos en try", ids, find)
+            console.log("entramos en try", ids, find, this.collection)
             return find
         } catch (e) {
             console.log("entramos en catch", e)
