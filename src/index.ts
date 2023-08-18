@@ -98,8 +98,8 @@ app.use(cors())
 
 app.get('/api/hello', async (req, res) => {
   let x = await Repository.getInstance()
-  console.log('repo', x.getCollection('movies'))
-  res.json({ 'message': "hola mundozs", x })
+  console.log('repo', x)
+  res.json({ 'message': "hola mundozsxx" })
 })
 
 
