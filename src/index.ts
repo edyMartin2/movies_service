@@ -7,13 +7,14 @@ import PlataformApplication from './application/PlataformApplication'
 import Movies from './models/MoviesModel'
 import { ObjectId } from 'mongodb'
 import Plataforms from './models/PlataformModel'
-
 import cors from 'cors'
+import Repository from './infrastructure/Repository'
+
 const app = express()
 const PORT = 3000
 const moviesRp = new MoviesApplication()
 const plataformRP = new PlataformApplication()
-
+const Instance = Repository.getInstance()
 
 // Middleware
 app.use(bodyParser.json());
@@ -101,6 +102,8 @@ app.get('/api', async (req, res) => {
   res.json({ 'message': "hola mundos" })
 })
 
+
+//versel platform 
 http.createServer(app).listen(3000, () => {
   console.log('Express server listening on port ' + app.get('port'))
 })

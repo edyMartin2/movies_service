@@ -34,7 +34,7 @@ class Repository {
 
             this.instance = new Repository();
             await this.instance.connect();
-            console.log("if nuevo", this.instance)
+            console.log("if nuevo", this.instance, this.instance.db)
             return this.instance
         } else if (this.instance.db !== undefined) {
             console.log("elseIf antiguo", this.instance.db)
@@ -42,7 +42,7 @@ class Repository {
         }
         else {
             let x = await this.instance.connect();
-            console.log("if reconectamos",x )
+            console.log("if reconectamos", x, this.instance, this.instance.db)
             return this.instance
         }
 
