@@ -14,7 +14,6 @@ const moviesRp = new MoviesApplication()
 const plataformRP = new PlataformApplication()
 
 
-
 // Middleware
 app.use(bodyParser.json());
 app.use(cors())
@@ -94,6 +93,10 @@ app.post('/plataforms', async (req, res) => {
   const body: Plataforms = req.body
   const save_movie = await plataformRP.create(body)
   res.json(save_movie)
+})
+
+app.get('/api', async (req, res) => {
+  res.json({ 'message': "hola mundo" })
 })
 // Start the server
 module.exports = app
