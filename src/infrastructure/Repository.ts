@@ -31,17 +31,18 @@ class Repository {
      */
     static async getInstance(): Promise<Repository> {
         if (!this.instance) {
-            console.log("if nuevo" )
+
             this.instance = new Repository();
             await this.instance.connect();
+            console.log("if nuevo", this.instance)
             return this.instance
         } else if (this.instance.db !== undefined) {
-            console.log("elseIf antiguo",this.instance.db)
+            console.log("elseIf antiguo", this.instance.db)
             return this.instance;
         }
         else {
-            console.log("if reconectamos")
-            await this.instance.connect();
+            let x = await this.instance.connect();
+            console.log("if reconectamos",x )
             return this.instance
         }
 
