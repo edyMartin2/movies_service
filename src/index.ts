@@ -1,12 +1,13 @@
 // src/app.ts
 import express from 'express'
 import bodyParser from 'body-parser'
-
+import http from 'http'
 import MoviesApplication from './application/MovieApplication'
 import PlataformApplication from './application/PlataformApplication'
 import Movies from './models/MoviesModel'
 import { ObjectId } from 'mongodb'
 import Plataforms from './models/PlataformModel'
+
 import cors from 'cors'
 const app = express()
 const PORT = 3000
@@ -98,5 +99,7 @@ app.post('/plataforms', async (req, res) => {
 app.get('/api', async (req, res) => {
   res.json({ 'message': "hola mundo" })
 })
-// Start the server
-module.exports = app
+
+http.createServer(app).listen(3000, () => {
+  console.log('Express server listening on port ' + app.get('port'))
+})
