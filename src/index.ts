@@ -14,7 +14,7 @@ const app = express()
 const PORT = 3000
 const moviesRp = new MoviesApplication()
 const plataformRP = new PlataformApplication()
-const repository = Repository.getInstance()
+
 // Middleware
 app.use(bodyParser.json());
 app.use(cors())
@@ -97,7 +97,8 @@ app.use(cors())
 // })
 
 app.get('/api/hello', async (req, res) => {
-  console.log('repo')
+  let x = await Repository.getInstance()
+  console.log('repo', x.getCollection('movies'))
   res.json({ 'message': "hola mundos" })
 })
 
