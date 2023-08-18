@@ -24,7 +24,7 @@ app.use(cors())
 /**
  * endpoint / for get all movies
  */
-app.get('/movies', async (_, res) => {
+app.get('/api/movies', async (_, res) => {
   const movies: Movies = await moviesRp.findAll()
   res.json(movies)
 });
