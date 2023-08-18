@@ -32,7 +32,7 @@ app.get('/api/movies', async (_, res) => {
 /**
  * endpoint /movies/:id for get one movie
  */
-app.get('/movies/:id', async (req, res) => {
+app.get('/api/movies/:id', async (req, res) => {
   const id = req.params.id
   const movie: Movies = await moviesRp.findById(id)
   res.json(movie)
@@ -41,7 +41,7 @@ app.get('/movies/:id', async (req, res) => {
 /**
  * endpoint /movies for create one movie
  */
-app.post('/movies', async (req, res) => {
+app.post('/api/movies', async (req, res) => {
   const body: Movies = req.body
   const save_movie = await moviesRp.create(body)
   res.json(save_movie)
@@ -50,7 +50,7 @@ app.post('/movies', async (req, res) => {
 /**
  * endpoint /movies/:id for update one movie
  */
-app.post('/movies/:id', async (req, res) => {
+app.post('/api/movies/:id', async (req, res) => {
   const id: ObjectId = new ObjectId(req.params.id)
   const body: Movies = req.body
   const update_movie = await moviesRp.update(id, body)
@@ -60,7 +60,7 @@ app.post('/movies/:id', async (req, res) => {
 /**
  * endpoint /movies/:id for delete one movie
  */
-app.delete('/movies/:id', async (req, res) => {
+app.delete('/api/movies/:id', async (req, res) => {
   const id: ObjectId = new ObjectId(req.params.id)
   console.log(id)
   const delete_movie = await moviesRp.delete(id)
@@ -72,7 +72,7 @@ app.delete('/movies/:id', async (req, res) => {
 /**
  * endpoint /platforms for get all plataforms
  */
-app.get('/plataforms', async (req, res) => {
+app.get('/api/plataforms', async (req, res) => {
   const plataform: Plataforms = await plataformRP.findAll()
   console.log('respuesta de pla', plataform)
   res.json(plataform)
@@ -81,7 +81,7 @@ app.get('/plataforms', async (req, res) => {
 /**
  * endpoint /plataforms/:id for get one plataform
  */
-app.get('/plataforms/:id', async (req, res) => {
+app.get('/api/plataforms/:id', async (req, res) => {
   const id = req.params.id
   const plataform: Plataforms = await plataformRP.findById(id)
   res.json(plataform)
@@ -90,14 +90,14 @@ app.get('/plataforms/:id', async (req, res) => {
 /**
  * endpoint /movies for create one movie
  */
-app.post('/plataforms', async (req, res) => {
+app.post('/api/plataforms', async (req, res) => {
   const body: Plataforms = req.body
   const save_movie = await plataformRP.create(body)
   res.json(save_movie)
 })
 
 app.get('/api', async (req, res) => {
-  
+
   res.json({ 'message': "hola mundos" })
 })
 
