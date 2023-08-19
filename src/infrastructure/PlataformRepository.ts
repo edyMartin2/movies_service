@@ -50,8 +50,8 @@ class PlataformRepository {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async post(Plataform: Plataforms): Promise<any> {
         try {
-            const insert = await this.collection?.insertOne(Plataform)
-            console.log("entramos en try", Plataform, insert)
+            let insertData = { ...Plataform, createdAt: new Date(), updatedAt: new Date() }
+            const insert = await this.collection?.insertOne(insertData)
             return insert
         } catch (e) {
             console.log("entramos en catch", e)
@@ -65,7 +65,7 @@ class PlataformRepository {
      */
     async update(id: ObjectId, Plataform: Plataforms) {
         try {
-            return await this.collection?.updateOne(id, Plataform)
+            return await this.collection?.updateOne({ _id: id }, { $set: Plataform, updatedAt: new Date() })
         } catch (e) {
             return { message: String(e) }
         }

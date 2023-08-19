@@ -96,7 +96,6 @@ app.post('/api/plataforms', async (req, res) => {
 })
 
 app.get('/api', async (req, res) => {
-
   res.json({ 'message': "hola mundos" })
 })
 

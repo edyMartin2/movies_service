@@ -72,7 +72,8 @@ class MovieRepository {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async post(Movie: Movies): Promise<any> {
         try {
-            return await this.collection?.insertOne(Movie)
+            let insertData = { ...Movie, createdAt: new Date(), updatedAt: new Date() }
+            return await this.collection?.insertOne(insertData)
         } catch (e) {
             return { message: String(e) }
         }
@@ -85,7 +86,9 @@ class MovieRepository {
     async update(id: ObjectId, Movie: Movies) {
         try {
             //{ _id: userID }, { $set: { name: "Nuevo Nombre" } }
-            return await this.collection?.updateOne({ _id: id }, { $set: Movie })
+            let set = { $set: { ...Movie, updatedAt: new Date() } }
+            console.log('--------------------->', set)
+            return await this.collection?.updateOne({ _id: id }, set)
         } catch (e) {
             return { message: String(e) }
         }
