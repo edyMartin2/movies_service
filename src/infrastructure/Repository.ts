@@ -10,10 +10,6 @@ const AGENT = process.env.AGENT
 const HOST = process.env.HOST
 //
 const URI = `${AGENT}://${USERDB}:${PASSWORLD}@${HOST}`
-/**
- * SINGLETON CLASS
- */
-
 
 class Repository {
     private static instance: Repository
@@ -22,7 +18,6 @@ class Repository {
 
     constructor() {
         this.client = new MongoClient(URI)
-        // console.log('---->', URI, "mongodb://root:1234@localhost:27017")
         try {
             this.client.connect();
             this.db = this.client.db(DBNAME);
@@ -32,38 +27,6 @@ class Repository {
             this.db = undefined
         }
     }
-
-    /**
-     * 
-     * @returns an instance of this class if exist else create a new instance
-     */
-
-
-    /*
-    static async getInstance(): Promise<Repository> {
-        if (!this.instance) {
-            this.instance = new Repository();
-            await this.instance.connect();
-            return this.instance
-        } else if (this.instance.db !== undefined) {
-            return this.instance;
-        }
-        else {
-            await this.instance.connect();
-            return this.instance
-        }
-
-    }
-    */
-
-    /*
-    private async connect() {
-        console.log('entramos al connect ', this.db === undefined ? 'vacia' : this.db)
-        
-    }
-
-    */
-
     /**
      * 
      * @param collection name of collection
@@ -73,10 +36,6 @@ class Repository {
         const collectionGet = this.db?.collection(collection);
         console.log('coleccionget::', collection)
         return collectionGet
-    }
-
-    static getDb() {
-        return this.instance.db
     }
 }
 
