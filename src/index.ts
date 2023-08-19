@@ -8,11 +8,7 @@ import Movies from './models/MoviesModel'
 import { ObjectId } from 'mongodb'
 import Plataforms from './models/PlataformModel'
 import cors from 'cors'
-import Repository from './infrastructure/Repository'
-
 const app = express()
-const PORT = 3000
-
 
 const moviesRp = new MoviesApplication()
 const plataformRP = new PlataformApplication()
