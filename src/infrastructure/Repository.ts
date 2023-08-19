@@ -20,38 +20,11 @@ class Repository {
     private client: MongoClient;
     private db: Db | undefined = undefined
 
-    private constructor() {
+    constructor() {
         this.client = new MongoClient(URI)
-        console.log('---->', URI, "mongodb://root:1234@localhost:27017")
-    }
-
-    /**
-     * 
-     * @returns an instance of this class if exist else create a new instance
-     */
-    static async getInstance(): Promise<Repository> {
-        if (!this.instance) {
-
-            this.instance = new Repository();
-            await this.instance.connect();
-            console.log("if nuevo", this.instance, this.instance.db)
-            return this.instance
-        } else if (this.instance.db !== undefined) {
-            console.log("elseIf antiguo", this.instance.db)
-            return this.instance;
-        }
-        else {
-            let x = await this.instance.connect();
-            console.log("if reconectamos", x, this.instance, this.instance.db)
-            return this.instance
-        }
-
-    }
-
-    private async connect() {
-        console.log('entramos al connect ', this.db === undefined ? 'vacia' : this.db)
+        // console.log('---->', URI, "mongodb://root:1234@localhost:27017")
         try {
-            await this.client.connect();
+            this.client.connect();
             this.db = this.client.db(DBNAME);
             console.log('Conexión a MongoDB establecida');
         } catch (error) {
@@ -59,6 +32,37 @@ class Repository {
             this.db = undefined
         }
     }
+
+    /**
+     * 
+     * @returns an instance of this class if exist else create a new instance
+     */
+
+
+    /*
+    static async getInstance(): Promise<Repository> {
+        if (!this.instance) {
+            this.instance = new Repository();
+            await this.instance.connect();
+            return this.instance
+        } else if (this.instance.db !== undefined) {
+            return this.instance;
+        }
+        else {
+            await this.instance.connect();
+            return this.instance
+        }
+
+    }
+    */
+
+    /*
+    private async connect() {
+        console.log('entramos al connect ', this.db === undefined ? 'vacia' : this.db)
+        
+    }
+
+    */
 
     /**
      * 

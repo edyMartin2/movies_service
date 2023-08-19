@@ -16,7 +16,7 @@ class MovieRepository {
     }
 
     async inicializar() {
-        this.db = await Repository.getInstance()
+        this.db = await new Repository()
         this.collection = this.db?.getCollection('Movies')
         //console.log('soy movie', this.db)
     }

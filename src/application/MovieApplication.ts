@@ -1,7 +1,8 @@
 import { ObjectId } from "mongodb";
 import MovieRepository from "../infrastructure/MovieRepository";
-const moviesRp = new MovieRepository()
 import Movies from "../models/MoviesModel";
+
+const moviesRp = new MovieRepository()
 class MoviesApplication {
 
     /**

@@ -16,7 +16,7 @@ class PlataformRepository {
     }
 
     async inicializar() {
-        this.db = await Repository.getInstance()
+        this.db = await new Repository()
         this.collection = await this.db?.getCollection('Plataforms')
         //console.log("soy repository ::", this.db)
     }
