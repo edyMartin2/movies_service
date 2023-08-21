@@ -13,7 +13,7 @@ class MoviesApplication {
     async findAll(page: number): Promise<responseAllMovies> {
         const movies: Movies = await moviesRp.get('', page)
         const count: number | undefined = await moviesRp.count()
-        return { movies: movies, pages: Math.round(count) }
+        return { movies: movies, pages: Math.ceil(count) }
     }
 
     /**
