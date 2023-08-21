@@ -4,12 +4,12 @@ import Repository from "./Repository";
 import { ObjectId } from 'mongodb';
 import PlataformRepository from './PlataformRepository';
 import Plataforms from '../models/PlataformModel';
-
 const plataformRepository = new PlataformRepository()
+
 class MovieRepository {
     private db: Repository | undefined;
     private collection: Collection | undefined
-
+    private width: number = 10
     constructor() {
         this.db = undefined
         this.inicializar()
@@ -28,16 +28,16 @@ class MovieRepository {
      */
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async get(id: string = "", paginaActual : number = 1): Promise<any> {
+    async get(id: string = "", paginaActual: number = 1): Promise<any> {
         try {
             const ids = id !== "" ? { _id: new ObjectId(id) } : {}
             // const movies = await this.collection?.find(ids).toArray();
 
-            const tamañoDePagina = 10;
+
             const movies = await this.collection?.find(ids)
                 .sort({ timestamp: -1 })
-                .skip((paginaActual - 1) * tamañoDePagina)
-                .limit(tamañoDePagina).toArray();
+                .skip((paginaActual - 1) * this.width)
+                .limit(this.width).toArray();
 
             const movies_platform = movies?.map(async (i) => {
                 const platform = i.platforms
@@ -61,7 +61,7 @@ class MovieRepository {
             const filtro_unidim: any = filtro.flat()
 
             // Elimina duplicados basados en la propiedad "_id"
-            const arregloSinDuplicados = this.eliminarDuplicados(filtro_unidim, '_id');
+            const arregloSinDuplicados = this.deleteRepeat(filtro_unidim, '_id');
 
             return arregloSinDuplicados
         } catch (e) {
@@ -110,8 +110,18 @@ class MovieRepository {
         }
     }
 
+    async count() {
+        try {
+            const totalCount = await this.db?.getCollectionCount();
+            const totalTransform = typeof (totalCount) === 'number' ? totalCount : 0
+            return totalTransform / this.width
+        } catch (error) {
+            return 0
+        }
+    }
+
     // Función para eliminar duplicados basados en la propiedad "_id"
-    eliminarDuplicados(arr: Movies[], prop: string): Movies[] {
+    private deleteRepeat(arr: Movies[], prop: string): Movies[] {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return arr.filter((obj: any, index, self) =>
             index === self.findIndex(

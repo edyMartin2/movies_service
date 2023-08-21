@@ -8,6 +8,7 @@ import Movies from './models/MoviesModel'
 import { ObjectId } from 'mongodb'
 import Plataforms from './models/PlataformModel'
 import cors from 'cors'
+import responseAllMovies from './types/responseAllMovies'
 const app = express()
 
 const moviesRp = new MoviesApplication()
@@ -25,7 +26,7 @@ app.use(cors())
  */
 app.get('/api/movies', async (req, res) => {
   const page = req.query.page as string
-  const movies: Movies = await moviesRp.findAll(parseInt(page))
+  const movies: responseAllMovies = await moviesRp.findAll(parseInt(page))
   res.json(movies)
 });
 

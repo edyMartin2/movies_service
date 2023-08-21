@@ -1,4 +1,4 @@
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, Collection } from 'mongodb';
 import * as dotenv from 'dotenv';
 // Cargar las variables de entorno desde el archivo .env
 dotenv.config();
@@ -15,6 +15,7 @@ class Repository {
     private static instance: Repository
     private client: MongoClient;
     private db: Db | undefined = undefined
+    private collection: Collection | undefined;
 
     constructor() {
         this.client = new MongoClient(URI)
@@ -34,8 +35,20 @@ class Repository {
      */
     public getCollection(collection: string) {
         const collectionGet = this.db?.collection(collection);
+        this.collection = collectionGet;
         console.log('coleccionget::', collection)
         return collectionGet
+    }
+
+    async getCollectionCount(): Promise<number | undefined> {
+        try {
+
+            const count: number | undefined = await this.collection?.countDocuments({});
+            return count;
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
     }
 }
 

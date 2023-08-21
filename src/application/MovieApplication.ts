@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import MovieRepository from "../infrastructure/MovieRepository";
 import Movies from "../models/MoviesModel";
+import responseAllMovies from "../types/responseAllMovies";
 
 const moviesRp = new MovieRepository()
 class MoviesApplication {
@@ -9,9 +10,10 @@ class MoviesApplication {
      * get all movies with this
      * @returns Movies[]
      */
-    async findAll(page: number): Promise<Movies> {
+    async findAll(page: number): Promise<responseAllMovies> {
         const movies: Movies = await moviesRp.get('', page)
-        return movies
+        const count: number | undefined = await moviesRp.count()
+        return { movies: movies, pages: Math.round(count) }
     }
 
     /**
