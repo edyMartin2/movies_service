@@ -23,8 +23,9 @@ app.use(cors())
 /**
  * endpoint / for get all movies
  */
-app.get('/api/movies', async (_, res) => {
-  const movies: Movies = await moviesRp.findAll()
+app.get('/api/movies', async (req, res) => {
+  const page = req.query.page as string
+  const movies: Movies = await moviesRp.findAll(parseInt(page))
   res.json(movies)
 });
 
@@ -98,7 +99,6 @@ app.post('/api/plataforms', async (req, res) => {
 app.get('/api', async (req, res) => {
   res.json({ 'message': "hola mundos" })
 })
-
 
 //versel platform 
 http.createServer(app).listen(3000, () => {

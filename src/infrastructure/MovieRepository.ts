@@ -28,10 +28,17 @@ class MovieRepository {
      */
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async get(id: string = ""): Promise<any> {
+    async get(id: string = "", paginaActual : number = 1): Promise<any> {
         try {
             const ids = id !== "" ? { _id: new ObjectId(id) } : {}
-            const movies = await this.collection?.find(ids).toArray();
+            // const movies = await this.collection?.find(ids).toArray();
+
+            const tamañoDePagina = 10;
+            const movies = await this.collection?.find(ids)
+                .sort({ timestamp: -1 })
+                .skip((paginaActual - 1) * tamañoDePagina)
+                .limit(tamañoDePagina).toArray();
+
             const movies_platform = movies?.map(async (i) => {
                 const platform = i.platforms
                 const platformInfo = await Promise.all(await platform.map(async (p: Plataforms) => {
@@ -44,7 +51,7 @@ class MovieRepository {
                     platforms: platformInfo
                 }
                 return data
-                return platformInfo
+
             })
 
             const movies_to_platform = movies_platform !== undefined ? await Promise.all(movies_platform) : []

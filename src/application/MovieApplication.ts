@@ -9,8 +9,8 @@ class MoviesApplication {
      * get all movies with this
      * @returns Movies[]
      */
-    async findAll(): Promise<Movies> {
-        const movies: Movies = await moviesRp.get()
+    async findAll(page: number): Promise<Movies> {
+        const movies: Movies = await moviesRp.get('', page)
         return movies
     }
 
@@ -45,7 +45,7 @@ class MoviesApplication {
         return update_movie
     }
 
-    async delete(id: ObjectId){
+    async delete(id: ObjectId) {
         const delete_movie = await moviesRp.delete(id)
         return delete_movie
     }
